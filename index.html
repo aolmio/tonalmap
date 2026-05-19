@@ -3,264 +3,141 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thai Tone Calculator</title>
-    <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Thai%20Tone%20Wizard%22,%22short_name%22:%22ToneWiz%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22#0f172a%22,%22theme_color%22:%22#3b82f6%22}">
+    <title>Thai Tone Rule Navigator</title>
+    <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Thai%20Tone%20Navigator%22,%22short_name%22:%22ToneNav%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%22#f8fafc%22,%22theme_color%22:%22#0f172a%22}">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+    </script>
     <style>
-        :root[data-theme="light"] {
+        :root {
             --bg: #f8fafc;
             --card-bg: #ffffff;
-            --text-main: #0f172a;
-            --text-muted: #475569;
-            --border: #e2e8f0;
-            --primary: #2563eb;
-            --btn-bg: #f1f5f9;
-            --btn-active: #3b82f6;
-            --btn-active-text: #ffffff;
-            
-            /* High Contrast Tone Badges */
-            --tone-mid: #e0f7fa; --text-mid: #006064;
-            --tone-low: #fff3e0; --text-low: #e65100;
-            --tone-fall: #ffebee; --text-fall: #c62828;
-            --tone-high: #f3e5f5; --text-high: #6a1b9a;
-            --tone-rise: #e8f5e9; --text-rise: #2e7d32;
-        }
-        :root[data-theme="dark"] {
-            --bg: #0f172a;
-            --card-bg: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #334155;
+            --text: #0f172a;
             --primary: #3b82f6;
-            --btn-bg: #334155;
-            --btn-active: #3b82f6;
-            --btn-active-text: #ffffff;
-
-            --tone-mid: #004d40; --text-mid: #e0f7fa;
-            --tone-low: #4e342e; --text-low: #ffb74d;
-            --tone-fall: #7f1d1d; --text-fall: #fee2e2;
-            --tone-high: #4a148c; --text-high: #ba68c8;
-            --tone-rise: #14532d; --text-rise: #4ade80;
         }
-
-        * { box-sizing: border-box; font-family: -apple-system, system-ui, sans-serif; transition: all 0.15s ease; }
-        body { background-color: var(--bg); color: var(--text-main); margin: 0; padding: 12px; display: flex; justify-content: center; }
-        
-        .app-card { width: 100%; max-width: 480px; background-color: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        h1 { font-size: 1.3rem; margin: 0; font-weight: 700; }
-        
-        .toggle-theme { background: var(--btn-bg); border: 1px solid var(--border); color: var(--text-main); padding: 6px 12px; border-radius: 20px; cursor: pointer; font-size: 0.8rem; }
-        
-        .step-container { margin-bottom: 20px; }
-        .step-title { font-size: 0.9rem; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
-        
-        /* Mobile-optimized button grid */
-        .btn-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 10px; }
-        .choice-btn { background-color: var(--btn-bg); border: 1px solid var(--border); color: var(--text-main); padding: 14px 10px; border-radius: 12px; font-size: 0.95rem; font-weight: 500; cursor: pointer; text-align: center; -webkit-tap-highlight-color: transparent; }
-        .choice-btn.active { background-color: var(--btn-active); color: var(--btn-active-text); border-color: var(--btn-active); box-shadow: 0 4px 6px rgba(59, 130, 246, 0.2); }
-        
-        .hidden { display: none; }
-
-        /* Oversized Result Section */
-        .result-box { margin-top: 24px; padding: 20px; border-radius: 14px; text-align: center; border: 2px solid transparent; }
-        .result-title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
-        .result-tone { font-size: 1.8rem; font-weight: 800; }
-
-        /* Mnemonic Shortcut Footer */
-        .mnemonic-tip { margin-top: 20px; background-color: var(--btn-bg); padding: 12px; border-radius: 10px; font-size: 0.85rem; line-height: 1.4; border-left: 4px solid var(--primary); }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .app-container {
+            max-width: 100%;
+            width: 600px;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        h1 { font-size: 1.5rem; margin: 0 0 8px 0; }
+        .diagram-container {
+            width: 100%;
+            overflow-x: auto;
+            background: #fafafa;
+            border-radius: 8px;
+            padding: 12px 0;
+            margin-bottom: 20px;
+        }
+        .mnemonic-section {
+            border-top: 1px solid #e2e8f0;
+            padding-top: 16px;
+        }
+        .tip-card {
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            border-left: 4px solid var(--primary);
+        }
+        .tip-card strong { color: var(--primary); }
     </style>
 </head>
 <body>
 
-<div class="app-card">
+<div class="app-container">
     <header>
-        <h1>Thai Tone Wizard</h1>
-        <button class="toggle-theme" id="themeBtn">🌓 Mode</button>
+        <h1>Thai Tone Decipherer</h1>
+        <p style="color: #64748b; margin: 0; font-size: 0.9rem;">Trace your syllable path below</p>
     </header>
 
-    <!-- STEP 1: Consonant Class -->
-    <div class="step-container">
-        <div class="step-title">1. Consonant Class</div>
-        <div class="btn-grid">
-            <button class="choice-btn" data-key="class" data-val="mid">Mid<br><small>กลาง</small></button>
-            <button class="choice-btn" data-key="class" data-val="high">High<br><small>สูง</small></button>
-            <button class="choice-btn" data-key="class" data-val="low">Low<br><small>ต่ำ</small></button>
+    <div class="diagram-container">
+        <pre class="mermaid">
+graph LR
+    A((Start:<br/>Thai Syllable)) --> B(Mid Consonants<br/>อักษรกลาง)
+    A --> C(High Consonants<br/>อักษรสูง)
+    A --> D(Low Consonants<br/>อักษรต่ำ)
+
+    %% Mid Consonants
+    B --> B1{Tone Mark?}
+    B1 -->|None| B2{Syllable Type}
+    B2 -->|Live| B_Mid[Mid Tone  - ]:::mid
+    B2 -->|Dead| B_Low[Low Tone  ˋ ]:::low
+    B1 -->|Mai Ek ่| B_Low2[Low Tone  ˋ ]:::low
+    B1 -->|Mai Tho ้| B_Fall[Falling Tone  ˆ ]:::fall
+    B1 -->|Mai Tri ๊| B_High[High Tone  ˊ ]:::high
+    B1 -->|Mai Chattawa ๋| B_Rise[Rising Tone  ˇ ]:::rise
+
+    %% High Consonants
+    C --> C1{Tone Mark?}
+    C1 -->|None| C2{Syllable Type}
+    C2 -->|Live| C_Rise[Rising Tone  ˇ ]:::rise
+    C2 -->|Dead| C_Low[Low Tone  ˋ ]:::low
+    C1 -->|Mai Ek ่| C_Low2[Low Tone  ˋ ]:::low
+    C1 -->|Mai Tho ้| C_Fall[Falling Tone  ˆ ]:::fall
+    
+    %% Low Consonants
+    D --> D1{Tone Mark?}
+    D1 -->|None| D2{Syllable Type}
+    D2 -->|Live| D_Mid[Mid Tone  - ]:::mid
+    D2 -->|Dead| D3{Vowel Length}
+    D3 -->|Short| D_High[High Tone  ˊ ]:::high
+    D3 -->|Long| D_Fall[Falling Tone  ˆ ]:::fall
+    D1 -->|Mai Ek ่| D_Fall2[Falling Tone  ˆ ]:::fall
+    D1 -->|Mai Tho ้| D_High2[High Tone  ˊ ]:::high
+
+    %% Styling to make outputs pop
+    classDef mid fill:#e0f7fa,stroke:#006064,stroke-width:2px;
+    classDef low fill:#fff3e0,stroke:#e65100,stroke-width:2px;
+    classDef fall fill:#ffebee,stroke:#b71c1c,stroke-width:2px;
+    classDef high fill:#f3e5f5,stroke:#4a148c,stroke-width:2px;
+    classDef rise fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px;
+        </pre>
+    </div>
+
+    <div class="mnemonic-section">
+        <h3 style="margin: 0 0 12px 0; font-size: 1.1rem;">💡 Quick Mnemonics</h3>
+        <div class="tip-card">
+            <strong>Mid Class:</strong> What you see is what you get! The tone marks match their standard names perfectly.
         </div>
-    </div>
-
-    <!-- STEP 2: Tone Mark -->
-    <div class="step-container">
-        <div class="step-title">2. Tone Mark</div>
-        <div class="btn-grid" id="toneMarkGrid">
-            <button class="choice-btn" data-key="mark" data-val="none">None</button>
-            <button class="choice-btn" data-key="mark" data-val="ek">่ (Ek)</button>
-            <button class="choice-btn" data-key="mark" data-val="tho">้ (Tho)</button>
-            <button class="choice-btn" data-key="mark" data-val="tri" id="markTri">๊ (Tri)</button>
-            <button class="choice-btn" data-key="mark" data-val="chattawa" id="markChattawa">๋ (Chatt.)</button>
+        <div class="tip-card">
+            <strong>Low Class Shift (+1 Rule):</strong> Low class consonants are rebels. An <em>Ek mark (่)</em> shifts the output up to a <strong>Falling tone</strong>, and a <em>Tho mark (้)</em> shifts it all the way up to a <strong>High tone</strong>.
         </div>
-    </div>
-
-    <!-- STEP 3: Syllable Type (Conditional) -->
-    <div class="step-container hidden" id="stepSyllable">
-        <div class="step-title" id="step3Title">3. Syllable Environment</div>
-        <div class="btn-grid" id="syllableGrid">
-            <!-- Dynamic Insertion based on rules -->
+        <div class="tip-card">
+            <strong>The Dead End:</strong> If there are no tone marks and the syllable is dead, High/Mid class drop deep down into a <strong>Low Tone</strong>.
         </div>
-    </div>
-
-    <!-- OUTPUT SCREEN -->
-    <div class="result-box hidden" id="resultBox">
-        <div class="result-title" id="resultTip">Calculated Tone</div>
-        <div class="result-tone" id="resultTone">--</div>
-    </div>
-
-    <div class="mnemonic-tip" id="mnemonicFooter">
-        Tap options above to isolate rules instantly. Perfect for quick phone reference without scrolling.
     </div>
 </div>
 
 <script>
-    // App State
-    let state = { class: null, mark: null, env: null };
-
-    // Tone Matrix Evaluation Logic
-    function calculateTone() {
-        const resultBox = document.getElementById('resultBox');
-        const resultTone = document.getElementById('resultTone');
-        const footer = document.getElementById('mnemonicFooter');
-        
-        if (!state.class || !state.mark) return;
-
-        // Route with Tone Marks
-        if (state.mark !== 'none') {
-            document.getElementById('stepSyllable').classList.add('hidden');
-            resultBox.classList.remove('hidden');
-            
-            if (state.class === 'mid') {
-                if (state.mark === 'ek') setTarget('Low Tone ˋ', 'low', 'Mid Class matches standard marks perfectly.');
-                if (state.mark === 'tho') setTarget('Falling Tone ˆ', 'fall', 'Mid Class matches standard marks perfectly.');
-                if (state.mark === 'tri') setTarget('High Tone ˊ', 'high', 'Mid Class matches standard marks perfectly.');
-                if (state.mark === 'chattawa') setTarget('Rising Tone ˇ', 'rise', 'Mid Class matches standard marks perfectly.');
-            } else if (state.class === 'high') {
-                if (state.mark === 'ek') setTarget('Low Tone ˋ', 'low', 'High class marks never lie. Ek is Low, Tho is Falling.');
-                if (state.mark === 'tho') setTarget('Falling Tone ˆ', 'fall', 'High class marks never lie. Ek is Low, Tho is Falling.');
-            } else if (state.class === 'low') {
-                if (state.mark === 'ek') setTarget('Falling Tone ˆ', 'fall', '⚠️ Low Class Rebel Rule: Mark steps up 1 level to Falling!');
-                if (state.mark === 'tho') setTarget('High Tone ˊ', 'high', '⚠️ Low Class Rebel Rule: Mark steps up 1 level to High!');
-            }
-            return;
-        }
-
-        // Route without Tone Marks (Requires Step 3)
-        if (!state.env) {
-            resultBox.classList.add('hidden');
-            return;
-        }
-        
-        resultBox.classList.remove('hidden');
-        if (state.class === 'mid') {
-            if (state.env === 'live') setTarget('Mid Tone —', 'mid', 'No mark + Live ending = Matches its identity (Mid).');
-            if (state.env === 'dead') setTarget('Low Tone ˋ', 'low', 'No mark + Dead ending truncates energy down to Low.');
-        } else if (state.class === 'high') {
-            if (state.env === 'live') setTarget('Rising Tone ˇ', 'rise', 'High class live syllables naturally float up to Rising.');
-            if (state.env === 'dead') setTarget('Low Tone ˋ', 'low', 'Dead endings plunge High Class right down to Low.');
-        } else if (state.class === 'low') {
-            if (state.env === 'live') setTarget('Mid Tone —', 'mid', 'Low class live syllables safely coast at Mid tone.');
-            if (state.env === 'short') setTarget('High Tone ˊ', 'high', 'Low + Dead + Short Vowel bounces up to a High tone.');
-            if (state.env === 'long') setTarget('Falling Tone ˆ', 'fall', 'Low + Dead + Long Vowel drops heavy to a Falling tone.');
-        }
-    }
-
-    function setTarget(tone, styleClass, tip) {
-        const rb = document.getElementById('resultBox');
-        rb.className = 'result-box'; 
-        rb.style.backgroundColor = `var(--tone-${styleClass})`;
-        rb.style.borderColor = `var(--text-${styleClass})`;
-        rb.style.color = `var(--text-${styleClass})`;
-        
-        document.getElementById('resultTone').innerText = tone;
-        document.getElementById('mnemonicFooter').innerHTML = `<strong>Mnemonic:</strong> ${tip}`;
-    }
-
-    // Handle View Conditional Shifts
-    function updateLayoutInjections() {
-        const stepSyllable = document.getElementById('stepSyllable');
-        const sylGrid = document.getElementById('syllableGrid');
-        
-        // Hide Tri/Chattawa marks for High/Low consonants (invalid in Thai)
-        if (state.class && state.class !== 'mid') {
-            document.getElementById('markTri').classList.add('hidden');
-            document.getElementById('markChattawa').classList.add('hidden');
-            if (state.mark === 'tri' || state.mark === 'chattawa') state.mark = null;
-        } else {
-            document.getElementById('markTri').classList.remove('hidden');
-            document.getElementById('markChattawa').classList.remove('hidden');
-        }
-
-        // Show/Configure Step 3 safely
-        if (state.mark === 'none' && state.class) {
-            stepSyllable.classList.remove('hidden');
-            if (state.class === 'low') {
-                document.getElementById('step3Title').innerText = "3. Syllable Type & Vowel Length";
-                sylGrid.innerHTML = `
-                    <button class="choice-btn ${state.env==='live'?'active':''}" data-key="env" data-val="live">Live<br><small>Sonorant/Long</small></button>
-                    <button class="choice-btn ${state.env==='short'?'active':''}" data-key="env" data-val="short">Dead + Short<br><small>เช่น ฮะ</small></button>
-                    <button class="choice-btn ${state.env==='long'?'active':''}" data-key="env" data-val="long">Dead + Long<br><small>เช่น มาก</small></button>
-                `;
-            } else {
-                document.getElementById('step3Title').innerText = "3. Syllable Type";
-                sylGrid.innerHTML = `
-                    <button class="choice-btn ${state.env==='live'?'active':''}" data-key="env" data-val="live">Live Syllable<br><small>Ends long/smooth</small></button>
-                    <button class="choice-btn ${state.env==='dead'?'active':''}" data-key="env" data-val="dead">Dead Syllable<br><small>Ends abrupt/sharp</small></button>
-                `;
-            }
-            bindClicks();
-        } else if (state.mark !== 'none') {
-            stepSyllable.classList.add('hidden');
-            state.env = null;
-        }
-    }
-
-    function bindClicks() {
-        document.querySelectorAll('.choice-btn').forEach(btn => {
-            btn.onclick = (e) => {
-                const target = e.currentTarget;
-                const key = target.getAttribute('data-key');
-                const val = target.getAttribute('data-val');
-
-                document.querySelectorAll(`[data-key="${key}"]`).forEach(b => b.classList.remove('active'));
-                target.classList.add('active');
-
-                state[key] = val;
-                if (key === 'class' || key === 'mark') {
-                    if (key === 'class' && state.mark === 'none') state.env = null; // Clear stale configurations
-                    updateLayoutInjections();
-                }
-                calculateTone();
-            };
-        });
-    }
-
-    // Light-Dark Interface Mode Configuration
-    const themeBtn = document.getElementById('themeBtn');
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    let activeTheme = localStorage.getItem('theme') || (systemPrefersDark ? 'dark' : 'light');
-    document.documentElement.setAttribute('data-theme', activeTheme);
-
-    themeBtn.onclick = () => {
-        activeTheme = activeTheme === 'dark' ? 'light' : 'dark';
-        document.documentElement.setAttribute('data-theme', activeTheme);
-        localStorage.setItem('theme', activeTheme);
-        calculateTone(); // Refresh calculated element custom property assignments
-    };
-
-    // Initial Launch sequence
-    bindClicks();
-
-    // PWA Service Worker Hook
+    // Register basic inline Service Worker for standalone PWA capability
     if ('serviceWorker' in navigator) {
-        const swBlob = new Blob([`self.addEventListener('fetch', (e) => e.respondWith(fetch(e.request)));`], {type: 'text/javascript'});
-        navigator.serviceWorker.register(URL.createObjectURL(swBlob));
+        const swBlob = new Blob([`
+            self.addEventListener('fetch', (e) => {
+                e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
+            });
+        `], {type: 'text/javascript'});
+        const swUrl = URL.createObjectURL(swBlob);
+        navigator.serviceWorker.register(swUrl);
     }
 </script>
 </body>
