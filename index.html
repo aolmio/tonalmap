@@ -709,14 +709,36 @@ const offlineVocabularyBackup = [
 ];
 
 // ══════════════════════════════════════════════════════════════════
-// PITCH CONTOUR DEFINITIONS & CANVAS DRAWING
+// PITCH CONTOUR DEFINITIONS & CANVAS DRAWING (CORRECT THAI TONES)
 // ══════════════════════════════════════════════════════════════════
+// Note: Canvas Y-axis values (0.0 = Top/High Pitch, 1.0 = Bottom/Low Pitch)
+
 const PITCH_CONTOURS = {
-    mid:     { points:[0.5,0.5,0.5,0.5,0.5], color:"#64748b", label:"Mid — flat" },
-    low:     { points:[0.35,0.3,0.28,0.27,0.27], color:"#047857", label:"Low ˋ descend" },
-    falling: { points:[0.15,0.2,0.45,0.75,0.88], color:"#b91c1c", label:"Falling ˆ peak→drop" },
-    high:    { points:[0.4,0.25,0.15,0.12,0.12], color:"#6d28d9", label:"High ˊ rise+hold" },
-    rising:  { points:[0.82,0.72,0.55,0.35,0.18], color:"#b45309", label:"Rising ˇ dip→climb" }
+    mid: { 
+        points: [0.45, 0.48, 0.52, 0.55, 0.58], 
+        color: "#64748b", 
+        label: "Mid (สามัญ) — Starts mid, drifts slightly down" 
+    },
+    low: { 
+        points: [0.65, 0.72, 0.78, 0.82, 0.82], 
+        color: "#047857", 
+        label: "Low (เอก) — Starts low, drops and levels out" 
+    },
+    falling: { 
+        points: [0.30, 0.20, 0.40, 0.70, 0.90], 
+        color: "#b91c1c", 
+        label: "Falling (โท) — Peaks early, then drops sharply" 
+    },
+    high: { 
+        points: [0.40, 0.35, 0.25, 0.15, 0.22], 
+        color: "#6d28d9", 
+        label: "High (ตรี) — Starts mid-high, soars up, slight final tail" 
+    },
+    rising: { 
+        points: [0.55, 0.75, 0.85, 0.50, 0.15], 
+        color: "#b45309", 
+        label: "Rising (จัตวา) — Dips low first, then climbs steeply to top" 
+    }
 };
 
 function drawPitchContour(canvasId, toneType) {
