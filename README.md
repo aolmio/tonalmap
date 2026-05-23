@@ -1,3 +1,4 @@
+```mermaid
 graph TD
     A((Start:<br/>Thai Syllable)) --> B(Mid Consonants<br/>อักษรกลาง)
     A --> C(High Consonants<br/>อักษรสูง)
