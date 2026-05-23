@@ -1,5 +1,4 @@
-```mermaid
-graph LR
+graph TD
     A((Start:<br/>Thai Syllable)) --> B(Mid Consonants<br/>อักษรกลาง)
     A --> C(High Consonants<br/>อักษรสูง)
     A --> D(Low Consonants<br/>อักษรต่ำ)
@@ -38,4 +37,3 @@ graph LR
     classDef fall fill:#ffebee,stroke:#b71c1c,stroke-width:2px;
     classDef high fill:#f3e5f5,stroke:#4a148c,stroke-width:2px;
     classDef rise fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px;
-```
