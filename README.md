@@ -1,5 +1,4 @@
-```mermaid
-graph TD
+    graph TD
     A((Start:<br/>Thai Syllable)) --> B(Mid Consonants<br/>อักษรกลาง)
     A --> C(High Consonants<br/>อักษรสูง)
     A --> D(Low Consonants<br/>อักษรต่ำ)
@@ -32,9 +31,9 @@ graph TD
     D1 -->|Mai Ek ่| D_Fall2[Falling Tone  ˆ ]:::fall
     D1 -->|Mai Tho ้| D_High2[High Tone  ˊ ]:::high
 
-    %% Styling to make outputs pop
-    classDef mid fill:#e0f7fa,stroke:#006064,stroke-width:2px;
-    classDef low fill:#fff3e0,stroke:#e65100,stroke-width:2px;
-    classDef fall fill:#ffebee,stroke:#b71c1c,stroke-width:2px;
-    classDef high fill:#f3e5f5,stroke:#4a148c,stroke-width:2px;
-    classDef rise fill:#e8f5e9,stroke:#1b5e20,stroke-width:2px;
+    %% ပြတ်သားပြီး ကြည့်ရအဆင်ပြေမယ့် Color Design များ
+    classDef mid fill:#E3F2FD,stroke:#1E88E5,stroke-width:2px,color:#0D47A1;
+    classDef low fill:#FFF3E0,stroke:#FB8C00,stroke-width:2px,color:#E65100;
+    classDef fall fill:#FFEBEE,stroke:#E53935,stroke-width:2px,color:#B71C1C;
+    classDef high fill:#F3E5F5,stroke:#8E24AA,stroke-width:2px,color:#4A148C;
+    classDef rise fill:#E8F5E9,stroke:#4CAF50,stroke-width:2px,color:#1B5E20;
